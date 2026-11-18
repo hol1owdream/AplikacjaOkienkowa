@@ -1,4 +1,5 @@
-﻿<Window x:Class="AplikacjaOkienkowa.MainWindow"
+﻿
+<Window x:Class="AplikacjaOkienkowa.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,32 +7,128 @@
         xmlns:local="clr-namespace:AplikacjaOkienkowa"
         mc:Ignorable="d"
         Title="Katalog okienkowy" Height="600" Width="800">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="AntiqueWhite" Offset="0.2"/>
-            <GradientStop Color="#FF2D" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
-    <StackPanel x:Name="GlownyPanel"
-                Margin="20">
-        <TextBlock Text="Katalog produktów"
-                   FontSize="24"
-                   FontWeight="Bold" FontFamily="Verdana"    />
-        <StackPanel x:Name="DrugiPanel" Orientation="Horizontal" Margin="0, 10, 0, 0">
+    <!-- nowy layout w oparciu o grid -->
+    <Grid Margin="10">
+        <!-- trzy wiersze, w tym środkowy o dynamicznym rozmiarze -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!-- kolumny - lewa na całą szerokość, prawa tyle ile musi -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <!-- tekst ze starego layoutu -->
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+            Text="Katalog produktów"
+            FontSize="24" 
+            FontWeight="Bold" />
+        <!-- nowy guzik -->
+        <Button Grid.Row="0" Grid.Column="1" 
+                Content="Odśwież" Margin="0 10"/>
+        <!-- lista produktów - placeholder - rozciągnięta na dwie kolumny -->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Tu pojawi się lista produktów"
+                   FontSize="18"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- nazwa produktu -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nazwa produktu:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TextBoxNazwaProduktu" Grid.Column="1" Margin="0 10"/>
+            <!-- cena produktu -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Cena:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TextBoxCenaProduktu" Grid.Row="1" Grid.Column="1" Margin="0 10"/>
+            <!-- ilość produktu -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Ilość:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TextBoxIloscProduktu" Grid.Row="2" Grid.Column="1" Margin="0 10"/>
+            <!-- kategoria produktu -->
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       Text="Kategoria:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="ComboBoxKategoriaProduktu" Grid.Row="3" Grid.Column="1" Margin="0 10">
+                <ComboBoxItem Content="Kategoria 1"/>
+                <ComboBoxItem Content="Kategoria 2"/>
+                <ComboBoxItem Content="Kategoria 3"/>
+            </ComboBox>
+            <!-- dostępność produktu -->
+            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10" 
+                      Content="Produkt dostępny" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Grid.Row="5" Grid.Column="0" Margin="0 10"
+                    Grid.ColumnSpan="2" 
+                    Content="Dodaj" />
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <TextBlock Text="Produktów: "
+                            FontSize="14" FontWeight="Bold" />
+                <TextBlock x:Name="EtykietaLiczbaProduktow" Text="0" FontSize="14" />
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <TextBlock Text="Łączna wartość: "
+                            FontSize="14" FontWeight="Bold" />
+                <TextBlock x:Name="EtykietaWartoscMagazynu" 
+                           Text="0" 
+                           FontSize="14"/>
+            </StackPanel>
+            <Button Grid.Row="0" Grid.Column="2" Content="Usuń" Margin="0 0 5 0"/>
+            <Button Grid.Row="0" Grid.Column="3" Content="Zamknij" Margin="5 0 0 0"/>
+        </Grid>
+    </Grid>
+    <!--
+        <StackPanel Grid.Row="2" Grid.Column="0" 
+                    Orientation="Horizontal" HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
             <TextBlock Text="Produktów: "
                     FontSize="14" FontFamily="Verdana" FontStyle="Italic"/>
             <TextBlock x:Name="EtykietaLiczbaProduktow"
                     Text="0"
-                    FontSize="14" TextDecorations="Underline" FontFamily="Verdana"/>
-        </StackPanel>
-        <StackPanel x:Name="TrzeciPanel" Orientation="Horizontal" Margin="0, 10, 0, 0">
+                    FontSize="14" TextDecorations="Underline" FontFamily="Verdana" Margin="0,0,10,0"/>
             <TextBlock Text="Wartość magazynu: "
-                FontSize="14" FontStyle="Italic" FontFamily="Verdana"/>
+                    FontSize="14" FontStyle="Italic" FontFamily="Verdana"/>
             <TextBlock x:Name="EtykietaWartoscMagazynu"
-                Text="0"
-                FontSize="14" FontFamily="Verdana" TextDecorations="Underline"/>
+                    Text="0"
+                    FontSize="14" FontFamily="Verdana" TextDecorations="Underline" Margin="0,0,10,0"/>
+         Buttony
+            <Button Content="Dodaj"
+                    Width="100"
+                    Margin="0,0,10,0"/>
+            <Button Content="Uzuń"
+                    Width="100"
+                    Margin="0,0,10,0"/>
+            <Button Content="Zamknij"
+                    Width="100"
+                    Margin="0,0,10,0"/>
         </StackPanel>
-        <!-- W środku buttona można umieścić textblock -->
+        -->
+    <!--
+    <StackPanel x:Name="GlownyPanel"
+                Margin="20">
+        
+        <StackPanel x:Name="DrugiPanel" Orientation="Horizontal" Margin="0, 10, 0, 0">
+            
+        </StackPanel>
+ W środku buttona można umieścić textblock
         <Button Margin="10" HorizontalAlignment="Center" Padding="5">
             <StackPanel Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Images/add.png" 
@@ -44,7 +141,7 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <!-- wewnątrz StackPanel możemy umieszczyć dowolne elementy, np. TextBox, ComboBox, ListBox itp., ale też całego grida -->
+ wewnątrz StackPanel możemy umieszczyć dowolne elementy, np. TextBox, ComboBox, ListBox itp., ale też całego grida 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -60,4 +157,6 @@
             <Button Grid.Column="1" Grid.Row="1" Content="Button 4"/>
         </Grid>
     </StackPanel>
+    -->
+
 </Window>
